@@ -17,3 +17,8 @@ default['firewalld']['firewalld_services']       =  [
   { :fwservice=>"http", :fwzone=>"public" }, # Caddy
   { :fwservice=>"https", :fwzone=>"public" } # Caddy
 ]
+
+default['docker']['images']    = [
+  { :name=>"ghost", :tag=>"latest" },
+  { :name=>"abiosoft/caddy", :tag=>"latest" }
+]

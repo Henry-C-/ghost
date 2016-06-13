@@ -10,6 +10,7 @@
 # --- Attribute Definitions
 uservars = node['henry-ghost']['users']
 repovars = node['henry-ghost']['repositories']
+imgvars  = node['docker']['images']
 
 
 
@@ -80,4 +81,11 @@ end
 
 docker_service 'default' do
   action [:create, :start]
+end
+
+imgvars.each do |dimages|
+  docker_image dimages[:name] do
+    tag dimages[:tag]
+    action :pull
+  end
 end
