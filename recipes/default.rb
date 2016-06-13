@@ -47,3 +47,31 @@ node['henry-ghost']['packages'].each do |package_name|
     action :install
   end
 end
+
+# --- Configure Firewalld
+
+service "firewalld" do
+  action [:enable, :start]
+  only_if { node['firewalld']['enable_firewalld'] }
+end
+
+service "firewalld" do
+  not_if { node['firewalld']['enable_firewalld'] }
+  action [:disable, :stop]
+end
+
+fwpvars.each do |fwpconf|
+  firewalld_port fwpconf[:fwport] do
+    action :add
+    zone fwpconf[:fwzone]
+    only_if { node['firewalld']['enable_firewalld'] }
+  end
+end
+
+fwsvars.each do |fwsconf|
+  firewalld_service fwsconf[:fwservice] do
+    action :add
+    zone fwsconf[:fwzone]
+    only_if { node['firewalld']['enable_firewalld'] }
+  end
+end
