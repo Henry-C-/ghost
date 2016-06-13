@@ -75,3 +75,9 @@ fwsvars.each do |fwsconf|
     only_if { node['firewalld']['enable_firewalld'] }
   end
 end
+
+# --- Beginning of Docker Config
+
+docker_service 'default' do
+  action [:create, :start]
+end
