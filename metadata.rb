@@ -1,0 +1,7 @@
+name             'henry-ghost'
+maintainer       'YOUR_NAME'
+maintainer_email 'YOUR_EMAIL'
+license          'All rights reserved'
+description      'Installs/Configures henry-ghost'
+long_description 'Installs/Configures henry-ghost'
+version          '0.1.0'
