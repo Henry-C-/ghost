@@ -9,6 +9,8 @@
 
 # --- Attribute Definitions
 uservars = node['henry-ghost']['users']
+repovars = node['henry-ghost']['repositories']
+
 
 
 # --- Add Required Users
@@ -24,5 +26,16 @@ uservars.each do |createusers|
     gid createusers[:gid]
     system false
     shell '/bin/bash'
+  end
+end
+
+# --- Install Required Yum Repo's
+
+repovars.each do |createrepos|
+  yum_repository createrepos[:reponame] do
+    description createrepos[:repodescription]
+    baseurl createrepos[:repobaseurl]
+    gpgkey createrepos[:repogpgkey]
+    action :create
   end
 end
