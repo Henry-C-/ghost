@@ -14,6 +14,11 @@ imgvars  = node['docker']['images']
 contvars = node['docker']['containers']
 fwsvars  = node['firewalld']['firewalld_services']
 
+# --- Disable SELinux (I'll learn it one day)
+
+selinux_state "Disable SELinux" do
+  action :disabled
+end
 
 # --- Add Required Users
 
