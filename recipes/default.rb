@@ -39,3 +39,11 @@ repovars.each do |createrepos|
     action :create
   end
 end
+
+# --- Install base packages
+
+node['henry-ghost']['packages'].each do |package_name|
+  package package_name do
+    action :install
+  end
+end
