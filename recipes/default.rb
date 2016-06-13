@@ -11,7 +11,7 @@
 uservars = node['henry-ghost']['users']
 repovars = node['henry-ghost']['repositories']
 imgvars  = node['docker']['images']
-
+contvars = node['docker']['containers']
 
 
 # --- Add Required Users
@@ -88,4 +88,17 @@ imgvars.each do |dimages|
     tag dimages[:tag]
     action :pull
   end
+end
+
+contvars.each do |containers|
+ docker_container containers[:name] do
+   repo containers[:repo]
+   tag containers[:tag]
+   port containers[:port]
+   network_mode containers[:network_mode]
+   links containers[:link]
+   volumes containers[:volumes]
+   env containers[:env]
+   restart_policy 'always'
+ end
 end
