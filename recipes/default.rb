@@ -93,7 +93,6 @@ contvars.each do |containers|
    repo containers[:repo]
    tag containers[:tag]
    port containers[:port]
-   network_mode containers[:network_mode]
    links containers[:link]
    volumes containers[:volumes]
    env containers[:env]
