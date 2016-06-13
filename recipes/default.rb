@@ -12,6 +12,7 @@ uservars = node['henry-ghost']['users']
 repovars = node['henry-ghost']['repositories']
 imgvars  = node['docker']['images']
 contvars = node['docker']['containers']
+fwsvars  = node['firewalld']['firewalld_services']
 
 
 # --- Add Required Users
@@ -59,14 +60,6 @@ end
 service "firewalld" do
   not_if { node['firewalld']['enable_firewalld'] }
   action [:disable, :stop]
-end
-
-fwpvars.each do |fwpconf|
-  firewalld_port fwpconf[:fwport] do
-    action :add
-    zone fwpconf[:fwzone]
-    only_if { node['firewalld']['enable_firewalld'] }
-  end
 end
 
 fwsvars.each do |fwsconf|
