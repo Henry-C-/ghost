@@ -49,6 +49,17 @@ fwsvars.each do |fwsconf|
   end
 end
 
+directory "/data" do
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
+execute "untar data" do
+  command "/bin/tar xzf /root/data.tar.gz -C /data/ ."
+end
+
 docker_service 'default' do
   action [:create, :start]
 end
