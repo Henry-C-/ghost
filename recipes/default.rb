@@ -7,36 +7,14 @@
 # All rights reserved - Do Not Redistribute
 #
 
-# --- Attribute Definitions
-uservars = node['henry-ghost']['users']
 repovars = node['henry-ghost']['repositories']
 imgvars  = node['docker']['images']
 contvars = node['docker']['containers']
 fwsvars  = node['firewalld']['firewalld_services']
 
-# --- Disable SELinux (I'll learn it one day)
-
 selinux_state "Disable SELinux" do
   action :disabled
 end
-
-# --- Add Required Users
-
-uservars.each do |createusers|
-  group createusers[:name] do
-    gid createusers[:gid]
-  end
-
-  user createusers[:name] do
-    home createusers[:home]
-    uid createusers[:uid]
-    gid createusers[:gid]
-    system false
-    shell '/bin/bash'
-  end
-end
-
-# --- Install Required Yum Repo's
 
 repovars.each do |createrepos|
   yum_repository createrepos[:reponame] do
@@ -47,15 +25,11 @@ repovars.each do |createrepos|
   end
 end
 
-# --- Install base packages
-
 node['henry-ghost']['packages'].each do |package_name|
   package package_name do
     action :install
   end
 end
-
-# --- Configure Firewalld
 
 service "firewalld" do
   action [:enable, :start]
@@ -75,8 +49,6 @@ fwsvars.each do |fwsconf|
   end
 end
 
-# --- Beginning of Docker Config
-
 docker_service 'default' do
   action [:create, :start]
 end
@@ -95,7 +67,6 @@ contvars.each do |containers|
    port containers[:port]
    links containers[:link]
    volumes containers[:volumes]
-   env containers[:env]
    restart_policy 'always'
  end
 end
