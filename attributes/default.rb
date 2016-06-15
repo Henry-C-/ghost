@@ -25,5 +25,5 @@ default['docker']['images']    = [
 
 default['docker']['containers'] = [
   { :name=>"ghost", :repo=>"ghost", :tag=>"latest", :port=>'2368:2368', :volumes=>"/data/ghost:/var/lib/ghost" },
-  { :name=>"caddy", :repo=>"abiosoft/caddy", :tag=>"latest", :port=>['80:80', '443:443'], :volumes=>"/data/caddy/Caddyfile:/etc/Caddyfile" }
+  { :name=>"caddy", :repo=>"abiosoft/caddy", :tag=>"latest", :port=>['80:80', '443:443'], :link=>"ghost:ghost" :volumes=>"/data/caddy/Caddyfile:/etc/Caddyfile" }
 ]
